@@ -12,8 +12,8 @@ namespace TournamentPlanner.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,8 +27,8 @@ namespace TournamentPlanner.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Round = table.Column<int>(type: "int", nullable: false),
-                    Player1ID = table.Column<int>(type: "int", nullable: false),
-                    Player2ID = table.Column<int>(type: "int", nullable: false),
+                    Player1ID = table.Column<int>(type: "int", nullable: true),
+                    Player2ID = table.Column<int>(type: "int", nullable: true),
                     WinnerID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -38,17 +38,20 @@ namespace TournamentPlanner.Migrations
                         name: "FK_Matches_Players_Player1ID",
                         column: x => x.Player1ID,
                         principalTable: "Players",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matches_Players_Player2ID",
                         column: x => x.Player2ID,
                         principalTable: "Players",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matches_Players_WinnerID",
                         column: x => x.WinnerID,
                         principalTable: "Players",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

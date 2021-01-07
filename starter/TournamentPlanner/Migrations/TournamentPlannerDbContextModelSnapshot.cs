@@ -26,10 +26,10 @@ namespace TournamentPlanner.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("Player1ID")
+                    b.Property<int?>("Player1ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Player2ID")
+                    b.Property<int?>("Player2ID")
                         .HasColumnType("int");
 
                     b.Property<int>("Round")
@@ -58,12 +58,10 @@ namespace TournamentPlanner.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -74,20 +72,15 @@ namespace TournamentPlanner.Migrations
                 {
                     b.HasOne("TournamentPlanner.Data.Player", "Player1")
                         .WithMany()
-                        .HasForeignKey("Player1ID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("Player1ID");
 
                     b.HasOne("TournamentPlanner.Data.Player", "Player2")
                         .WithMany()
-                        .HasForeignKey("Player2ID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("Player2ID");
 
                     b.HasOne("TournamentPlanner.Data.Player", "Winner")
                         .WithMany()
-                        .HasForeignKey("WinnerID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("WinnerID");
 
                     b.Navigation("Player1");
 
